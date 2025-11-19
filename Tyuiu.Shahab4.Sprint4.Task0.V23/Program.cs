@@ -19,7 +19,7 @@ namespace Tyuiu.Shahab4.Sprint4.Task0.V23
             Console.WriteLine("***************************************************************************");
             Console.WriteLine("* УСЛОВИЕ:                                                                *");
             Console.WriteLine("* Дан одномерный целочисленный массив на 10 элементов заполненный         *");
-            Console.WriteLine("* статическими значениями в диапазоне от 0 до 9. Подсчитать сумму         *");
+            Console.WriteLine("* статическими значениями в диапазоне от 0 до 9. Подсчитать произведение  *");
             Console.WriteLine("* нечетных элементов массива. {9 ,3 ,7 ,1 ,5 ,5 ,3 ,2 ,1 ,7}             *");
             Console.WriteLine("***************************************************************************");
             Console.WriteLine("* ИСХОДНЫЕ ДАННЫЕ:                                                        *");
@@ -39,8 +39,8 @@ namespace Tyuiu.Shahab4.Sprint4.Task0.V23
             Console.WriteLine("* РЕЗУЛЬТАТ:                                                             *");
             Console.WriteLine("***************************************************************************");
 
-            int result = ds.GetSumOddArrEl(array);
-            Console.WriteLine($"Сумма нечетных элементов массива = {result}");
+            int result = ds.GetMultOddArrEl(array);
+            Console.WriteLine($"Произведение нечетных элементов массива = {result}");
 
             Console.ReadKey();
         }

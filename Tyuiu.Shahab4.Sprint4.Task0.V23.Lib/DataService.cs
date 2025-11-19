@@ -4,25 +4,24 @@ namespace Tyuiu.Shahab4.Sprint4.Task0.V23.Lib
 {
     public class DataService : ISprint4Task0V23
     {
-        public int GetMultOddArrEl(int[] array)
+        public DataService()
         {
-            throw new NotImplementedException();
         }
 
-        public int GetSumOddArrEl(int[] array)
+        public int GetMultOddArrEl(int[] array)
         {
-            int sum = 0;
+            int product = 1;
 
-            // Суммирование нечетных элементов массива
+            // Произведение нечетных элементов массива
             for (int i = 0; i < array.Length; i++)
             {
                 if (array[i] % 2 != 0)
                 {
-                    sum += array[i];
+                    product *= array[i];
                 }
             }
 
-            return sum;
+            return product;
         }
     }
 }
