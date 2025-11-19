@@ -1,7 +1,7 @@
 ﻿using System;
-using Tyuiu.Shahab4.Sprint4.Task2.V16.Lib;
+using Tyuiu.Shahab4.Sprint4.Task1.V16.Lib;
 
-namespace Tyuiu.Shahab4.Sprint4.Task2.V16
+namespace Tyuiu.Shahab4.Sprint4.Task1.V16
 {
     class Program
     {
@@ -13,7 +13,7 @@ namespace Tyuiu.Shahab4.Sprint4.Task2.V16
             Console.WriteLine("***************************************************************************");
             Console.WriteLine("* Спринт #4                                                               *");
             Console.WriteLine("* Тема: Обработка структурных типов                                       *");
-            Console.WriteLine("* Задание #2                                                              *");
+            Console.WriteLine("* Задание #1                                                              *");
             Console.WriteLine("* Вариант #16                                                             *");
             Console.WriteLine("* Выполнил: Шахаб А. | АСОиУБ-25-1                                       *");
             Console.WriteLine("***************************************************************************");
