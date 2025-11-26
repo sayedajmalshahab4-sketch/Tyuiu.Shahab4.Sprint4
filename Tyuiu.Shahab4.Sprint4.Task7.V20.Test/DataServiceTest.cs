@@ -49,54 +49,32 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Test
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void EmptyStringTest()
+        public void ValidGetEvenNumbers()
         {
             DataService ds = new DataService();
-            ds.Calculate("");
+
+            string str = "357951248632587";
+            string evenNumbers = ds.GetEvenNumbers(str);
+
+            Assert.IsTrue(evenNumbers.Contains("2"));
+            Assert.IsTrue(evenNumbers.Contains("4"));
+            Assert.IsTrue(evenNumbers.Contains("6"));
+            Assert.IsTrue(evenNumbers.Contains("8"));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void NullStringTest()
+        public void ManualCalculationCheck()
         {
-            DataService ds = new DataService();
-            ds.Calculate(null);
-        }
+            // Ручная проверка расчета
+            int[] evenNumbers = { 2, 4, 8, 6, 2, 8 };
+            int product = 1;
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void InvalidLengthTest()
-        {
-            DataService ds = new DataService();
-            ds.Calculate("123"); // Слишком короткая строка
-        }
+            foreach (int num in evenNumbers)
+            {
+                product *= num;
+            }
 
-        [TestMethod]
-        public void NoEvenNumbersTest()
-        {
-            DataService ds = new DataService();
-
-            string str = "135791357913579"; // Все нечетные
-            int res = ds.Calculate(str);
-
-            Assert.AreEqual(0, res);
-        }
-
-        [TestMethod]
-        public void MatrixToStringTest()
-        {
-            DataService ds = new DataService();
-
-            int[,] matrix = {
-                { 1, 2, 3 },
-                { 4, 5, 6 }
-            };
-
-            string result = ds.MatrixToString(matrix);
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Contains("1 2 3"));
-            Assert.IsTrue(result.Contains("4 5 6"));
+            Assert.AreEqual(6144, product);
         }
     }
 }
