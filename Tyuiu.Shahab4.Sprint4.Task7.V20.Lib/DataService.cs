@@ -1,6 +1,5 @@
 ﻿using System;
 using tyuiu.cources.programming.interfaces.Sprint4;
-
 namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Lib
 {
     public class DataService : ISprint4Task7V20
@@ -11,24 +10,30 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Lib
 
         public int Calculate(string str)
         {
-            if (string.IsNullOrEmpty(str) || str.Length != 15)
-                return 0;
+            Console.WriteLine($"Input string: {str}"); // Для отладки
 
-            // Прямой расчет без создания матрицы
+            int[,] matrix = GetMatrix(str);
             int product = 1;
-            bool foundEven = false;
+            bool hasEven = false;
 
-            foreach (char c in str)
+            Console.WriteLine("Matrix values:");
+            for (int i = 0; i < 5; i++)
             {
-                int num = int.Parse(c.ToString());
-                if (num % 2 == 0)
+                for (int j = 0; j < 3; j++)
                 {
-                    product *= num;
-                    foundEven = true;
+                    Console.Write($"{matrix[i, j]} ");
+                    if (matrix[i, j] % 2 == 0)
+                    {
+                        product *= matrix[i, j];
+                        hasEven = true;
+                        Console.Write($"(even) ");
+                    }
                 }
+                Console.WriteLine();
             }
 
-            return foundEven ? product : 0;
+            Console.WriteLine($"Final product: {product}");
+            return hasEven ? product : 0;
         }
 
         public int Calculate(int n, int m, string value)
@@ -38,9 +43,6 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Lib
 
         public int[,] GetMatrix(string str)
         {
-            if (string.IsNullOrEmpty(str) || str.Length != 15)
-                return new int[0, 0];
-
             int[,] matrix = new int[5, 3];
             int index = 0;
 
