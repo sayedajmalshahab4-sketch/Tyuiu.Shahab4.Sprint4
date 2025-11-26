@@ -1,9 +1,14 @@
 ﻿using System;
+using tyuiu.cources.programming.interfaces.Sprint4;
 
 namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Lib
 {
-    public class DataService
+    public class DataService : ISprint4Task7V20
     {
+        public DataService()
+        {
+        }
+
         public int Calculate(string str)
         {
             if (string.IsNullOrEmpty(str) || str.Length != 15)
@@ -24,6 +29,11 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Lib
             }
 
             return foundEven ? product : 0;
+        }
+
+        public int Calculate(int n, int m, string value)
+        {
+            throw new NotImplementedException();
         }
 
         public int[,] GetMatrix(string str)
