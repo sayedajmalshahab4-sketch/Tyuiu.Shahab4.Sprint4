@@ -4,36 +4,46 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Lib
 {
     public class DataService : ISprint4Task7V20
     {
-        public DataService()
-        {
-        }
-
         public int Calculate(string str)
         {
-            Console.WriteLine($"Input string: {str}"); // Для отладки
+            // Проверка входной строки
+            if (string.IsNullOrEmpty(str))
+                throw new ArgumentException("Строка не может быть пустой или null");
 
-            int[,] matrix = GetMatrix(str);
-            int product = 1;
-            bool hasEven = false;
+            if (str.Length != 15)
+                throw new ArgumentException("Длина строки должна быть 15 символов для матрицы 5x3");
 
-            Console.WriteLine("Matrix values:");
+            // Преобразуем строку в матрицу 5x3
+            int[,] matrix = new int[5, 3];
+            int index = 0;
+
             for (int i = 0; i < 5; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    Console.Write($"{matrix[i, j]} ");
+                    matrix[i, j] = int.Parse(str[index].ToString());
+                    index++;
+                }
+            }
+
+            // Подсчитываем произведение четных чисел
+            int product = 1;
+            bool hasEvenNumbers = false;
+
+            for (int i = 0; i < 5; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
                     if (matrix[i, j] % 2 == 0)
                     {
                         product *= matrix[i, j];
-                        hasEven = true;
-                        Console.Write($"(even) ");
+                        hasEvenNumbers = true;
                     }
                 }
-                Console.WriteLine();
             }
 
-            Console.WriteLine($"Final product: {product}");
-            return hasEven ? product : 0;
+            // Если четных чисел нет, возвращаем 0
+            return hasEvenNumbers ? product : 0;
         }
 
         public int Calculate(int n, int m, string value)
@@ -43,6 +53,9 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Lib
 
         public int[,] GetMatrix(string str)
         {
+            if (string.IsNullOrEmpty(str) || str.Length != 15)
+                throw new ArgumentException("Некорректная строка");
+
             int[,] matrix = new int[5, 3];
             int index = 0;
 
@@ -56,6 +69,20 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Lib
             }
 
             return matrix;
+        }
+
+        public string MatrixToString(int[,] matrix)
+        {
+            string result = "";
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                for (int j = 0; j < matrix.GetLength(1); j++)
+                {
+                    result += matrix[i, j] + " ";
+                }
+                result += "\n";
+            }
+            return result;
         }
     }
 }

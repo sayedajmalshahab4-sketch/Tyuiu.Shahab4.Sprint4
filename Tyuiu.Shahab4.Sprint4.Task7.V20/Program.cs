@@ -7,13 +7,13 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20
     {
         static void Main(string[] args)
         {
-            Console.Title = "Спринт #4 | Выполнил: Шахаб А. | СМАРТб-23-1";
+            Console.Title = "Спринт #4 | Выполнил: Шахаб А. | СМАРТб-25-1";
             Console.WriteLine("***************************************************************************");
             Console.WriteLine("* Спринт #4                                                               *");
             Console.WriteLine("* Тема: Обработка строковых данных                                        *");
             Console.WriteLine("* Задание #7                                                              *");
             Console.WriteLine("* Вариант #20                                                             *");
-            Console.WriteLine("* Выполнил: Шахаб А. | СМАРТб-23-1                                       *");
+            Console.WriteLine("* Выполнил: Шахаб А. | СМАРТб-25-1                                       *");
             Console.WriteLine("***************************************************************************");
             Console.WriteLine("* УСЛОВИЕ:                                                                *");
             Console.WriteLine("* Дана строка из одноразрядных цифр '357951248632587'. Преобразуйте ее в  *");
