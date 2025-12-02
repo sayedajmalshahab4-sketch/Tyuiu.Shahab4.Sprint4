@@ -4,6 +4,10 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Lib
 {
     public class DataService : ISprint4Task7V20
     {
+        public DataService()
+        {
+        }
+
         public int Calculate(string str)
         {
             // Проверка входной строки
@@ -83,6 +87,16 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Lib
                 result += "\n";
             }
             return result;
+        }
+
+        public long ProductOfEvenNumbers(int[,] matrix)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int[,] StringToMatrix(string str, int rows, int columns)
+        {
+            throw new NotImplementedException();
         }
     }
 }

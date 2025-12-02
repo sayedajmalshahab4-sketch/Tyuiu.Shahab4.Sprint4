@@ -1,106 +1,183 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Tyuiu.Shahab4.Sprint4.Task7.V20.Lib;
 
-namespace Tyuiu.Shahab4.Sprint4.Task7.V20
+namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Test
 {
-    class Program
+    [TestClass]
+    public class DataServiceTest
     {
-        static void Main(string[] args)
+        [TestMethod]
+        public void ValidConvertStringToMatrix()
         {
-            Console.Title = "Спринт #4 | Выполнил: Шахаб А. | СМАРТб-23-1";
-            Console.WriteLine("***************************************************************************");
-            Console.WriteLine("* Спринт #4                                                               *");
-            Console.WriteLine("* Тема: Обработка строковых данных                                        *");
-            Console.WriteLine("* Задание #7                                                              *");
-            Console.WriteLine("* Вариант #20                                                             *");
-            Console.WriteLine("* Выполнил: Шахаб А. | СМАРТб-23-1                                       *");
-            Console.WriteLine("***************************************************************************");
-            Console.WriteLine("* УСЛОВИЕ:                                                                *");
-            Console.WriteLine("* Дана строка из одноразрядных цифр '357951248632587'. Преобразуйте ее в  *");
-            Console.WriteLine("* матрицу 5 на 3 и подсчитайте произведение четных чисел.                *");
-            Console.WriteLine("***************************************************************************");
-            Console.WriteLine("* ИСХОДНЫЕ ДАННЫЕ:                                                        *");
-            Console.WriteLine("***************************************************************************");
-
-            string str = "357951248632587";
-            Console.WriteLine($"Исходная строка: {str}");
-            Console.WriteLine($"Длина строки: {str.Length} символов");
-
-            Console.WriteLine("***************************************************************************");
-            Console.WriteLine("* РЕЗУЛЬТАТ:                                                              *");
-            Console.WriteLine("***************************************************************************");
-
             DataService ds = new DataService();
 
-            try
+            string str = "357951248632587";
+            int rows = 5;
+            int columns = 3;
+
+            int[,] matrix = ds.StringToMatrix(str, rows, columns);
+
+            int wait_rows = 5;
+            int wait_columns = 3;
+
+            Assert.AreEqual(wait_rows, matrix.GetLength(0));
+            Assert.AreEqual(wait_columns, matrix.GetLength(1));
+        }
+
+        [TestMethod]
+        public void ValidCalculateProductOfEvenNumbers()
+        {
+            DataService ds = new DataService();
+
+            int[,] matrix = new int[5, 3]
             {
-                // Получаем матрицу
-                int[,] matrix = ds.GetMatrix(str);
+                { 3, 5, 7 },
+                { 9, 5, 1 },
+                { 2, 4, 8 },
+                { 6, 3, 2 },
+                { 5, 8, 7 }
+            };
 
-                // Выводим матрицу
-                Console.WriteLine("Матрица 5x3:");
-                for (int i = 0; i < 5; i++)
-                {
-                    Console.Write("Строка {0}: ", i + 1);
-                    for (int j = 0; j < 3; j++)
-                    {
-                        Console.Write($"{matrix[i, j]}\t");
-                    }
-                    Console.WriteLine();
-                }
+            long res = ds.ProductOfEvenNumbers(matrix);
+            long wait = 6144; // 2 * 4 * 8 * 6 * 2 * 8 = 6144
 
-                Console.WriteLine();
+            Assert.AreEqual(wait, res);
+        }
 
-                // Находим и выводим четные числа
-                Console.Write("Четные числа в матрице: ");
-                int product = 1;
-                bool firstNumber = true;
+        [TestMethod]
+        public void ValidIntegrationTest()
+        {
+            DataService ds = new DataService();
 
-                for (int i = 0; i < 5; i++)
-                {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        if (matrix[i, j] % 2 == 0)
-                        {
-                            if (!firstNumber)
-                            {
-                                Console.Write(" × ");
-                            }
-                            Console.Write(matrix[i, j]);
-                            product *= matrix[i, j];
-                            firstNumber = false;
-                        }
-                    }
-                }
+            string str = "357951248632587";
+            int rows = 5;
+            int columns = 3;
 
-                // Вычисляем произведение
-                int result = ds.Calculate(str);
+            int[,] matrix = ds.StringToMatrix(str, rows, columns);
+            long product = ds.ProductOfEvenNumbers(matrix);
 
-                Console.WriteLine();
-                Console.WriteLine($"Произведение четных чисел = {result}");
+            long wait = 6144;
 
-                // Детали расчета
-                if (result != 0)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Детали расчета:");
-                    Console.WriteLine($"2 × 4 = 8");
-                    Console.WriteLine($"8 × 8 = 64");
-                    Console.WriteLine($"64 × 6 = 384");
-                    Console.WriteLine($"384 × 2 = 768");
-                    Console.WriteLine($"768 × 8 = {result}");
-                }
-                else
-                {
-                    Console.WriteLine("Четных чисел в матрице нет");
-                }
-            }
-            catch (Exception ex)
+            Assert.AreEqual(wait, product);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void InvalidStringLength()
+        {
+            DataService ds = new DataService();
+
+            string str = "12345";
+            int rows = 5;
+            int columns = 3;
+
+            ds.StringToMatrix(str, rows, columns);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void StringContainsNonDigits()
+        {
+            DataService ds = new DataService();
+
+            string str = "35795A248632587";
+            int rows = 5;
+            int columns = 3;
+
+            ds.StringToMatrix(str, rows, columns);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void EmptyString()
+        {
+            DataService ds = new DataService();
+
+            string str = "";
+            int rows = 5;
+            int columns = 3;
+
+            ds.StringToMatrix(str, rows, columns);
+        }
+
+        [TestMethod]
+        public void MatrixWithoutEvenNumbers()
+        {
+            DataService ds = new DataService();
+
+            int[,] matrix = new int[2, 2]
             {
-                Console.WriteLine($"Ошибка! {ex.Message}");
-            }
+                { 1, 3 },
+                { 5, 7 }
+            };
 
-            Console.ReadKey();
+            long res = ds.ProductOfEvenNumbers(matrix);
+            long wait = 0;
+
+            Assert.AreEqual(wait, res);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void NullMatrix()
+        {
+            DataService ds = new DataService();
+
+            ds.ProductOfEvenNumbers(null);
+        }
+
+        [TestMethod]
+        public void CheckMatrixValuesFromString()
+        {
+            DataService ds = new DataService();
+
+            string str = "357951248632587";
+            int rows = 5;
+            int columns = 3;
+
+            int[,] matrix = ds.StringToMatrix(str, rows, columns);
+
+            // Проверка значений первой строки
+            Assert.AreEqual(3, matrix[0, 0]);
+            Assert.AreEqual(5, matrix[0, 1]);
+            Assert.AreEqual(7, matrix[0, 2]);
+
+            // Проверка значений третьей строки (четные числа)
+            Assert.AreEqual(2, matrix[2, 0]);
+            Assert.AreEqual(4, matrix[2, 1]);
+            Assert.AreEqual(8, matrix[2, 2]);
+        }
+
+        [TestMethod]
+        public void ProductWithSingleEvenNumber()
+        {
+            DataService ds = new DataService();
+
+            int[,] matrix = new int[1, 3]
+            {
+                { 1, 2, 3 }
+            };
+
+            long res = ds.ProductOfEvenNumbers(matrix);
+            long wait = 2;
+
+            Assert.AreEqual(wait, res);
+        }
+
+        [TestMethod]
+        public void ProductWithZero()
+        {
+            DataService ds = new DataService();
+
+            int[,] matrix = new int[1, 3]
+            {
+                { 2, 0, 4 }
+            };
+
+            long res = ds.ProductOfEvenNumbers(matrix);
+            long wait = 0; // 2 * 0 * 4 = 0
+
+            Assert.AreEqual(wait, res);
         }
     }
 }
