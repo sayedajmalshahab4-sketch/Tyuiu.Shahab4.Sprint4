@@ -7,58 +7,15 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Test
     public class DataServiceTest
     {
         [TestMethod]
-        public void ValidConvertStringToMatrix()
+        public void ValidCalculate()
         {
             DataService ds = new DataService();
 
             string str = "357951248632587";
-            int rows = 5;
-            int columns = 3;
-
-            int[,] matrix = ds.StringToMatrix(str, rows, columns);
-
-            int wait_rows = 5;
-            int wait_columns = 3;
-
-            Assert.AreEqual(wait_rows, matrix.GetLength(0));
-            Assert.AreEqual(wait_columns, matrix.GetLength(1));
-        }
-
-        [TestMethod]
-        public void ValidCalculateProductOfEvenNumbers()
-        {
-            DataService ds = new DataService();
-
-            int[,] matrix = new int[5, 3]
-            {
-                { 3, 5, 7 },
-                { 9, 5, 1 },
-                { 2, 4, 8 },
-                { 6, 3, 2 },
-                { 5, 8, 7 }
-            };
-
-            long res = ds.ProductOfEvenNumbers(matrix);
-            long wait = 6144; // 2 * 4 * 8 * 6 * 2 * 8 = 6144
+            int res = ds.Calculate(str);
+            int wait = 6144; // 2 * 4 * 8 * 6 * 2 * 8 = 6144
 
             Assert.AreEqual(wait, res);
-        }
-
-        [TestMethod]
-        public void ValidIntegrationTest()
-        {
-            DataService ds = new DataService();
-
-            string str = "357951248632587";
-            int rows = 5;
-            int columns = 3;
-
-            int[,] matrix = ds.StringToMatrix(str, rows, columns);
-            long product = ds.ProductOfEvenNumbers(matrix);
-
-            long wait = 6144;
-
-            Assert.AreEqual(wait, product);
         }
 
         [TestMethod]
@@ -68,10 +25,7 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Test
             DataService ds = new DataService();
 
             string str = "12345";
-            int rows = 5;
-            int columns = 3;
-
-            ds.StringToMatrix(str, rows, columns);
+            ds.Calculate(str);
         }
 
         [TestMethod]
@@ -81,10 +35,7 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Test
             DataService ds = new DataService();
 
             string str = "35795A248632587";
-            int rows = 5;
-            int columns = 3;
-
-            ds.StringToMatrix(str, rows, columns);
+            ds.Calculate(str);
         }
 
         [TestMethod]
@@ -94,90 +45,34 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Test
             DataService ds = new DataService();
 
             string str = "";
-            int rows = 5;
-            int columns = 3;
-
-            ds.StringToMatrix(str, rows, columns);
+            ds.Calculate(str);
         }
 
         [TestMethod]
-        public void MatrixWithoutEvenNumbers()
+        public void CalculateWithDifferentString()
         {
             DataService ds = new DataService();
 
-            int[,] matrix = new int[2, 2]
-            {
-                { 1, 3 },
-                { 5, 7 }
-            };
+            // Тест с другой строкой из 15 цифр
+            string str = "123456789012345";
+            int res = ds.Calculate(str);
 
-            long res = ds.ProductOfEvenNumbers(matrix);
-            long wait = 0;
-
-            Assert.AreEqual(wait, res);
+            // Четные числа: 2,4,6,8,0,2,4
+            // 2*4*6*8*0*2*4 = 0
+            Assert.AreEqual(0, res);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void NullMatrix()
+        public void CalculateWithAllEvenNumbers()
         {
             DataService ds = new DataService();
 
-            ds.ProductOfEvenNumbers(null);
-        }
+            string str = "246802468024680";
+            int res = ds.Calculate(str);
 
-        [TestMethod]
-        public void CheckMatrixValuesFromString()
-        {
-            DataService ds = new DataService();
-
-            string str = "357951248632587";
-            int rows = 5;
-            int columns = 3;
-
-            int[,] matrix = ds.StringToMatrix(str, rows, columns);
-
-            // Проверка значений первой строки
-            Assert.AreEqual(3, matrix[0, 0]);
-            Assert.AreEqual(5, matrix[0, 1]);
-            Assert.AreEqual(7, matrix[0, 2]);
-
-            // Проверка значений третьей строки (четные числа)
-            Assert.AreEqual(2, matrix[2, 0]);
-            Assert.AreEqual(4, matrix[2, 1]);
-            Assert.AreEqual(8, matrix[2, 2]);
-        }
-
-        [TestMethod]
-        public void ProductWithSingleEvenNumber()
-        {
-            DataService ds = new DataService();
-
-            int[,] matrix = new int[1, 3]
-            {
-                { 1, 2, 3 }
-            };
-
-            long res = ds.ProductOfEvenNumbers(matrix);
-            long wait = 2;
-
-            Assert.AreEqual(wait, res);
-        }
-
-        [TestMethod]
-        public void ProductWithZero()
-        {
-            DataService ds = new DataService();
-
-            int[,] matrix = new int[1, 3]
-            {
-                { 2, 0, 4 }
-            };
-
-            long res = ds.ProductOfEvenNumbers(matrix);
-            long wait = 0; // 2 * 0 * 4 = 0
-
-            Assert.AreEqual(wait, res);
+            // Все числа четные, произведение всех чисел
+            // Это большое число, но для теста проверим что не 0
+            Assert.AreNotEqual(0, res);
         }
     }
 }

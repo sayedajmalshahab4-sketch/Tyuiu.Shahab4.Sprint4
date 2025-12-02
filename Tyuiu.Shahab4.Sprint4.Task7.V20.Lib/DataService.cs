@@ -1,100 +1,114 @@
 ﻿using System;
 using tyuiu.cources.programming.interfaces.Sprint4;
+
 namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Lib
 {
     public class DataService : ISprint4Task7V20
     {
-        public DataService()
-        {
-        }
-
+        /// <summary>
+        /// Основной метод для расчета произведения четных чисел в матрице 5x3
+        /// </summary>
+        /// <param name="str">Строка из 15 цифр</param>
+        /// <returns>Произведение четных чисел</returns>
         public int Calculate(string str)
         {
-            // Проверка входной строки
             if (string.IsNullOrEmpty(str))
-                throw new ArgumentException("Строка не может быть пустой или null");
+            {
+                throw new ArgumentException("Строка не может быть пустой");
+            }
 
             if (str.Length != 15)
-                throw new ArgumentException("Длина строки должна быть 15 символов для матрицы 5x3");
-
-            // Преобразуем строку в матрицу 5x3
-            int[,] matrix = new int[5, 3];
-            int index = 0;
-
-            for (int i = 0; i < 5; i++)
             {
-                for (int j = 0; j < 3; j++)
+                throw new ArgumentException($"Строка должна содержать 15 символов. Передано: {str.Length}");
+            }
+
+            foreach (char c in str)
+            {
+                if (!char.IsDigit(c))
                 {
-                    matrix[i, j] = int.Parse(str[index].ToString());
-                    index++;
+                    throw new ArgumentException($"Строка должна содержать только цифры. Обнаружен символ: '{c}'");
                 }
             }
 
-            // Подсчитываем произведение четных чисел
-            int product = 1;
-            bool hasEvenNumbers = false;
+            // Создаем матрицу 5x3
+            int rows = 5;
+            int columns = 3;
+            int[,] matrix = new int[rows, columns];
 
-            for (int i = 0; i < 5; i++)
+            // Заполняем матрицу
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < columns; j++)
+                {
+                    int index = i * columns + j;
+                    matrix[i, j] = int.Parse(str[index].ToString());
+                }
+            }
+
+            // Вычисляем произведение четных чисел
+            int product = 1;
+            bool hasEven = false;
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
                 {
                     if (matrix[i, j] % 2 == 0)
                     {
                         product *= matrix[i, j];
-                        hasEvenNumbers = true;
+                        hasEven = true;
                     }
                 }
             }
 
-            // Если четных чисел нет, возвращаем 0
-            return hasEvenNumbers ? product : 0;
+            return hasEven ? product : 0;
         }
 
-        public int Calculate(int n, int m, string value)
+        // Старые методы можно оставить для обратной совместимости
+        public int[,] StringToMatrix(string str, int rows, int columns)
         {
-            throw new NotImplementedException();
-        }
-
-        public int[,] GetMatrix(string str)
-        {
-            if (string.IsNullOrEmpty(str) || str.Length != 15)
-                throw new ArgumentException("Некорректная строка");
-
-            int[,] matrix = new int[5, 3];
-            int index = 0;
-
-            for (int i = 0; i < 5; i++)
+            if (str.Length != rows * columns)
             {
-                for (int j = 0; j < 3; j++)
+                throw new ArgumentException($"Неверная длина строки. Ожидалось {rows * columns}, получено {str.Length}");
+            }
+
+            int[,] matrix = new int[rows, columns];
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
                 {
-                    matrix[i, j] = int.Parse(str[index].ToString());
-                    index++;
+                    matrix[i, j] = int.Parse(str[i * columns + j].ToString());
                 }
             }
 
             return matrix;
         }
 
-        public string MatrixToString(int[,] matrix)
+        public int ProductOfEvenNumbers(int[,] matrix)
         {
-            string result = "";
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            int product = 1;
+            bool hasEven = false;
+
+            int rows = matrix.GetLength(0);
+            int columns = matrix.GetLength(1);
+
+            for (int i = 0; i < rows; i++)
             {
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                for (int j = 0; j < columns; j++)
                 {
-                    result += matrix[i, j] + " ";
+                    if (matrix[i, j] % 2 == 0)
+                    {
+                        product *= matrix[i, j];
+                        hasEven = true;
+                    }
                 }
-                result += "\n";
             }
-            return result;
+
+            return hasEven ? product : 0;
         }
 
-        public long ProductOfEvenNumbers(int[,] matrix)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int[,] StringToMatrix(string str, int rows, int columns)
+        public int Calculate(int n, int m, string value)
         {
             throw new NotImplementedException();
         }
