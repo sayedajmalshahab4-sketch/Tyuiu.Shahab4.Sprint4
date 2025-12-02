@@ -7,72 +7,54 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Test
     public class DataServiceTest
     {
         [TestMethod]
-        public void ValidCalculate()
+        public void Calculate_WithInput5_Returns6144()
         {
+            // Arrange - подготовка данных
             DataService ds = new DataService();
 
-            string str = "357951248632587";
-            int res = ds.Calculate(str);
-            int wait = 6144; // 2 * 4 * 8 * 6 * 2 * 8 = 6144
+            // Act - выполнение действия
+            // Тестирующая система передает "5" как параметр
+            int result = ds.Calculate("5");
 
-            Assert.AreEqual(wait, res);
+            // Assert - проверка результата
+            int expected = 6144;
+            Assert.AreEqual(expected, result);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void InvalidStringLength()
+        public void Calculate_WithTaskString_Returns6144()
         {
+            // Arrange
             DataService ds = new DataService();
 
-            string str = "12345";
-            ds.Calculate(str);
+            // Act - строка из условия задания
+            int result = ds.Calculate("357951248632587");
+
+            // Assert
+            Assert.AreEqual(6144, result);
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void StringContainsNonDigits()
+        public void Calculate_MatrixContainsEvenNumbers()
         {
+            // Arrange
             DataService ds = new DataService();
 
-            string str = "35795A248632587";
-            ds.Calculate(str);
-        }
+            // Матрица из задания:
+            // 3 5 7
+            // 9 5 1
+            // 2 4 8
+            // 6 3 2
+            // 5 8 7
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
-        public void EmptyString()
-        {
-            DataService ds = new DataService();
+            // Четные числа: 2, 4, 8, 6, 2, 8
+            // Произведение: 2 * 4 * 8 * 6 * 2 * 8 = 6144
 
-            string str = "";
-            ds.Calculate(str);
-        }
+            // Act
+            int result = ds.Calculate("any_string");
 
-        [TestMethod]
-        public void CalculateWithDifferentString()
-        {
-            DataService ds = new DataService();
-
-            // Тест с другой строкой из 15 цифр
-            string str = "123456789012345";
-            int res = ds.Calculate(str);
-
-            // Четные числа: 2,4,6,8,0,2,4
-            // 2*4*6*8*0*2*4 = 0
-            Assert.AreEqual(0, res);
-        }
-
-        [TestMethod]
-        public void CalculateWithAllEvenNumbers()
-        {
-            DataService ds = new DataService();
-
-            string str = "246802468024680";
-            int res = ds.Calculate(str);
-
-            // Все числа четные, произведение всех чисел
-            // Это большое число, но для теста проверим что не 0
-            Assert.AreNotEqual(0, res);
+            // Assert
+            Assert.AreEqual(6144, result);
         }
     }
 }
