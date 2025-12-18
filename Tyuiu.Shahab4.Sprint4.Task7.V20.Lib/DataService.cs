@@ -1,8 +1,9 @@
 ﻿using System;
 using tyuiu.cources.programming.interfaces.Sprint4;
+
 namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Lib
 {
-    public class DataService : ISprint4Task7V20
+    public class DataService : ISprint4Task7V20 
     {
         public DataService()
         {
@@ -10,37 +11,34 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Lib
 
         public int Calculate(string str)
         {
-           
-            int[,] matrix = new int[5, 3];
-            int index = 0;
-
-            for (int i = 0; i < 5; i++)
+            
+            if (string.IsNullOrEmpty(str) || str.Length != 15)
             {
-                for (int j = 0; j < 3; j++)
-                {
-                    matrix[i, j] = int.Parse(str[index].ToString());
-                    index++;
-                }
+                return 0;
             }
 
-           
+          
             int product = 1;
-            bool hasEven = false;
+            bool foundEven = false;
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < str.Length; i++)
             {
-                for (int j = 0; j < 3; j++)
+                char c = str[i];
+
+                if (char.IsDigit(c))
                 {
-                    if (matrix[i, j] % 2 == 0)
+                    int digit = int.Parse(c.ToString());
+
+                    
+                    if (digit % 2 == 0)
                     {
-                        product *= matrix[i, j];
-                        hasEven = true;
+                        product = product * digit; 
+                        foundEven = true;
                     }
                 }
             }
 
-            
-            return hasEven ? product : 0;
+            return foundEven ? product : 0;
         }
 
         public int Calculate(int n, int m, string value)
