@@ -7,54 +7,38 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Test
     public class DataServiceTest
     {
         [TestMethod]
-        public void Calculate_WithInput5_Returns6144()
+        public void CalculateTest()
         {
-            // Arrange - подготовка данных
             DataService ds = new DataService();
 
-            // Act - выполнение действия
-            // Тестирующая система передает "5" как параметр
-            int result = ds.Calculate("5");
+            string str = "357951248632587";
+            int result = ds.Calculate(str);
+            int wait = 6144;  // 2 * 4 * 8 * 6 * 2 * 8 = 6144
 
-            // Assert - проверка результата
-            int expected = 6144;
-            Assert.AreEqual(expected, result);
+            Assert.AreEqual(wait, result);
         }
 
         [TestMethod]
-        public void Calculate_WithTaskString_Returns6144()
+        public void CalculateTestNoEven()
         {
-            // Arrange
             DataService ds = new DataService();
 
-            // Act - строка из условия задания
-            int result = ds.Calculate("357951248632587");
+            string str = "135791357913579";
+            int result = ds.Calculate(str);
 
-            // Assert
-            Assert.AreEqual(6144, result);
+            Assert.AreEqual(0, result);
         }
 
         [TestMethod]
-        public void Calculate_MatrixContainsEvenNumbers()
+        public void CalculateTestOneEven()
         {
-            // Arrange
             DataService ds = new DataService();
 
-            // Матрица из задания:
-            // 3 5 7
-            // 9 5 1
-            // 2 4 8
-            // 6 3 2
-            // 5 8 7
+           
+            string str = "111111111111112";
+            int result = ds.Calculate(str);
 
-            // Четные числа: 2, 4, 8, 6, 2, 8
-            // Произведение: 2 * 4 * 8 * 6 * 2 * 8 = 6144
-
-            // Act
-            int result = ds.Calculate("any_string");
-
-            // Assert
-            Assert.AreEqual(6144, result);
+            Assert.AreEqual(2, result);
         }
     }
 }

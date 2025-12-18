@@ -1,6 +1,5 @@
 ﻿using System;
 using tyuiu.cources.programming.interfaces.Sprint4;
-
 namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Lib
 {
     public class DataService : ISprint4Task7V20
@@ -9,48 +8,39 @@ namespace Tyuiu.Shahab4.Sprint4.Task7.V20.Lib
         {
         }
 
-        /// <summary>
-        /// Вычисляет произведение четных чисел в матрице 5x3
-        /// </summary>
-        /// <param name="str">Входная строка (в задании игнорируется, используется фиксированная строка)</param>
-        /// <returns>Произведение четных чисел</returns>
         public int Calculate(string str)
         {
-            // В задании указана конкретная строка "357951248632587"
-            string fixedString = "357951248632587";
+           
+            int[,] matrix = new int[5, 3];
+            int index = 0;
 
-            // Создаем матрицу 5x3
-            int rows = 5;
-            int cols = 3;
-            int[,] matrix = new int[rows, cols];
-
-            // Заполняем матрицу значениями из строки
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < 5; i++)
             {
-                for (int j = 0; j < cols; j++)
+                for (int j = 0; j < 3; j++)
                 {
-                    int index = i * cols + j;
-                    matrix[i, j] = int.Parse(fixedString[index].ToString());
+                    matrix[i, j] = int.Parse(str[index].ToString());
+                    index++;
                 }
             }
 
-            // Вычисляем произведение четных чисел
+           
             int product = 1;
-            bool hasEvenNumbers = false;
+            bool hasEven = false;
 
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < 5; i++)
             {
-                for (int j = 0; j < cols; j++)
+                for (int j = 0; j < 3; j++)
                 {
                     if (matrix[i, j] % 2 == 0)
                     {
                         product *= matrix[i, j];
-                        hasEvenNumbers = true;
+                        hasEven = true;
                     }
                 }
             }
 
-            return hasEvenNumbers ? product : 0;
+            
+            return hasEven ? product : 0;
         }
 
         public int Calculate(int n, int m, string value)
